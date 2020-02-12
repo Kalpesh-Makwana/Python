@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-md-12">
+    <center>
+    {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+        {{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+<hr>
+<h1>Orders</h1>
+<hr>
+<b>
+        {% if object_list|length > 0 %}
+        
+        <table class="table table-hover" style="width:50%;">
+            <tr>
+                <td>No.</td>
+                <td>Customer Name</td>
+                <td>City</td>
+                <td>Date</td>
+            </tr>
+        {%for i in object_list %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.user.first_name}}</td>
+                <td>{{i.city}}</td>
+                <td>{{i.date}}</td>
+            <tr>
+        {%endfor%}
+        </table><hr>
+        
+        {% else %}
+        <tr><h2>Data not Exists</h2></tr>
+        {% endif %}
+
+</table>
+</div>
+{% endblock %}

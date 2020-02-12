@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <hr>
+            <h3>Book Cleaner </h3>
+        <hr><br><br>
+    </div>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form method="POST">
+                {% csrf_token %}
+                   
+                {% for field in form %}
+                <div class="form-group row">
+                    <label for="full_name" class="col-md-4 col-form-label text-md-right">{{ field.label}}</label>
+                    <div class="col-md-6">
+                        {{ field}}            
+                    </div>
+                </div>
+                {%endfor%}
+                <div class="form-group row">
+                <div class="col-md-12 offset-md-3">
+                    <button type="submit" class="btn btn-secondary">
+                        Search Cleaner
+                    </button>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<div>
+
+
+<div class=row>
+{% if cleaner|length > 0 %}
+    {% for i in cleaner %}
+        <div class="card m-2" style="width:400px">
+            <div class="card-body">
+            <form method="POST" action="{% url 'bookcleaner:bookingorder' %}">
+                {% csrf_token %}
+                    <div style="display: none;">
+                        {{ form.as_p }}
+                    </div>
+                    <input type="hidden" name="cleaner" value="{{ i.pk }}">
+                <h4 class="card-title">{{ i.user.first_name|title }}</h4>
+                <p class="card-text">Rate:{{ i.quality_score }}</p>
+                <button type="submit" class="btn btn-primary stretched-link">Book Appointment</button>
+            </form>
+            </div>
+        </div>
+    {% endfor %}        
+</div>
+{% elif cleaner|length <= 0 and  cleaner != None %}
+
+    <div class="alert alert-danger">
+        <a href="#" class="alert-link">Cleaner not Available</a>.
+    </div>
+
+{% endif%}
+
+</form>
+</div>
+{% endblock %}

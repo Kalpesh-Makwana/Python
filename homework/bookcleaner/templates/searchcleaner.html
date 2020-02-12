@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+  <center>
+    {% if cleaner|length > 0%}
+      <br><br>
+      <h2> Cleaners Are Available</h2><br>
+      <hr>
+      <form method="POST" action="/bookingorder/">{% csrf_token %}
+      <div class=row>
+        {% for i in cleaner %}   
+          <div class="card ml-5 mb-5" style="width:300px">
+            <div class="card-header"> Name: {{i.user.first_name}}  {{i.user.last_name}}</div>
+            <div class="card-header">Rating: {{i.quality_score}}</div>
+            <div class="card-body">
+                <button type='submit' class="btn btn-light">Book Now</button>
+            </div>
+          </div>
+        {%endfor%}
+      </div>
+    {% elif cleaner|length <= 0 and  cleaner != None %}
+      <div class="alert alert-danger">
+          <a href="#" class="alert-link">Sorry!,Cleaners Not Available</a>.   
+      </div>
+    {% endif %}
+    </center>
+</div>
+{%endblock%}

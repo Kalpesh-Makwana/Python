@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{%block content%}
+{% csrf_token %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+
+
+<div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5 border shadow-lg bg-white rounded">
+          <div class="card-body">
+            <h5 class="card-title text-center">Sign In</h5>
+            <form class="form-signin" id="submitform" method="post">{%csrf_token%}
+                {%for field in form%}
+                    <div class="form-label-group p-4">
+                        <div class="row">
+                            <div class="col-sm-6">
+                               <b> {{ field.label}} :</b>
+                            </div>
+                            <div class="col-sm-6">
+                                {{ field}}
+                            </div>  
+                    </div>
+                {%endfor%}
+                <div class="form-label-group p-4">
+                    <button class="btn btn-secondary btn-block text-uppercase" type="submit">Sign In</button>
+                </div>
+            </form>
+            <div class="col-sm-12 p-3 text-center">
+                <p>Do You Have Account??</p> 
+                <a href="{% url 'bookcleaning:signup' %}"> Create Account </a>
+            </div>
+            <p id='error' class=""></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+{%endblock%}
+</center>
